@@ -25,21 +25,21 @@ app.post("/", function(req, res) {
     const email = req.body.email;
     const listId = '3d953001ab';
  
-    // const subscribingUser = {
-    //     firstName: firstname,
-    //     lastName: lastname,
-    //     email: email
-    // };
+    const subscribingUser = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email
+    };
  
  
     const run = async () => {
         const response = await mailchimp.lists.batchListMembers(listId, {
           members: [{
-              email_address: email,
+              email_address:subscribingUser.email,
               status: "subscribed",
               merge_fields: {
-                  FNAME: firstName,
-                  LNAME: lastName
+                  FNAME: subscribingUser.firstName,
+                  LNAME: subscribingUser.lastName
               }
           }],
         }).then(responses => {
