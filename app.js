@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const mailchimp = require("@mailchimp/mailchimp_marketing");
@@ -13,15 +14,15 @@ app.get("/", function (req, res) {
 });
 
 mailchimp.setConfig({
-    apiKey: "c75cd93da1384880344455a3fd6c4419-us14",
-    server: "us14",
+    apiKey: process.env.API_KEY,
+    server: process.env.SERVER,
 });
 
 app.post("/", function (req, res) {
     const firstName = req.body.firstname;
     const lastName = req.body.lastname;
     const email = req.body.email;
-    const listId = "3d953001ab";
+    const listId = process.env.LIST_ID;
 
     const subscribingUser = {
         firstName: firstName,
@@ -65,7 +66,3 @@ app.post("/failure", function (req, res) {
 app.listen(process.env.PORT || 3000, function () {
     console.log("Server is running at port 3000");
 });
-
-// 3d953001ab
-// apiKey: "a75cd93da1384880344455a3fd6c4419-us14",
-//   server: "us14",
